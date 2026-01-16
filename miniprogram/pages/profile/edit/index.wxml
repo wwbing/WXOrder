@@ -1,0 +1,32 @@
+<!--pages/profile/edit/index.wxml-->
+<view class="edit-container">
+  
+  <view class="edit-card">
+    
+    <!-- Avatar Section -->
+    <view class="section">
+      <view class="section-title">头像</view>
+      <view class="avatar-section">
+        <image class="avatar-preview" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill" />
+        <button class="btn-avatar-upload" bindtap="onChooseAvatar">更换头像</button>
+      </view>
+    </view>
+
+    <!-- Nickname Section -->
+    <view class="section">
+      <view class="section-title">昵称</view>
+      <input 
+        class="nickname-input" 
+        placeholder="请输入昵称"
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+        maxlength="20"
+      />
+      <view class="input-hint">{{nickname.length}}/20</view>
+    </view>
+
+    <!-- Submit Button -->
+    <button class="submit-btn" bindtap="onSubmit">保存</button>
+  </view>
+
+</view>

@@ -1,0 +1,34 @@
+<!--pages/profile/settings/index.wxml-->
+<view class="container">
+  <!-- 口味偏好 -->
+  <view class="section">
+    <view class="section-title">口味偏好</view>
+    <view class="setting-item">
+      <text class="label">不吃香菜</text>
+      <switch checked="{{tastePreferences.avoid_cilantro}}" bindchange="onCilantroChange" color="#07c160" />
+    </view>
+    <view class="setting-item">
+      <text class="label">不吃辣</text>
+      <switch checked="{{tastePreferences.no_spicy}}" bindchange="onSpicyChange" color="#07c160" />
+    </view>
+    <view class="setting-item">
+      <text class="label">素食主义者</text>
+      <switch checked="{{tastePreferences.vegetarian}}" bindchange="onVegetarianChange" color="#07c160" />
+    </view>
+  </view>
+
+  <!-- 通知设置 -->
+  <view class="section">
+    <view class="section-title">消息通知</view>
+    <view class="setting-item">
+      <text class="label">接收点餐提醒</text>
+      <switch checked="{{notificationEnabled}}" bindchange="onNotificationChange" color="#07c160" />
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="about-section">
+    <text>家庭点餐小程序 v1.0</text>
+    <text style="display:block;margin-top:10rpx;">让一家人吃得更开心</text>
+  </view>
+</view>

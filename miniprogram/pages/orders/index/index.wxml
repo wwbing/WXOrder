@@ -1,0 +1,57 @@
+<!--pages/orders/index/index.wxml-->
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-card" wx:if="{{stats}}">
+    <view class="stat-item">
+      <text class="stat-value">{{stats.total}}</text>
+      <text class="stat-label">总订单</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">¥{{stats.total_amount / 100}}</text>
+      <text class="stat-label">总金额</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.unpaid}}</text>
+      <text class="stat-label">待付款</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.paid}}</text>
+      <text class="stat-label">已付款</text>
+    </view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="orders-section" wx:if="{{list.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">订单历史</text>
+    </view>
+    <view class="order-list">
+      <view class="order-item" wx:for="{{list}}" wx:key="_id" bindtap="goToDetail" data-id="{{item._id}}">
+        <view class="order-header">
+          <text class="order-title">{{item.title}}</text>
+          <view class="order-status {{item.payment_status}}">
+            <text>{{item.payment_status === 'paid' ? '已付款' : '待付款'}}</text>
+          </view>
+        </view>
+        <view class="order-info">
+          <text class="order-date">{{formatTime(item.created_at)}}</text>
+          <text class="order-count">{{item.order_count || 0}}人参与</text>
+        </view>
+        <view class="order-footer">
+          <text class="order-amount">¥{{item.total_amount / 100}}</text>
+          <text class="order-action">查看详情</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{list.length === 0 && !loading}}">
+    <text class="empty-icon">📄</text>
+    <text class="empty-text">暂无订单</text>
+    <text class="empty-hint">发起点餐后会生成订单</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+</view>

@@ -1,0 +1,11 @@
+{
+  "name": "ordering",
+  "version": "1.0.0",
+  "description": "点餐功能云函数",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

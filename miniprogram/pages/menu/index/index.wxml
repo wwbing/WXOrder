@@ -1,0 +1,175 @@
+<!--pages/menu/index/index.wxml-->
+<view class="container page-kitchen">
+  <!-- Top Header Area -->
+  <view class="kitchen-header">
+    <view class="kitchen-bg-container" bindtap="previewKitchenBg">
+      <image class="kitchen-bg-image" src="{{kitchenInfo.bgImage || defaultBg}}" mode="aspectFill"></image>
+    </view>
+    
+    <view class="header-card-wrapper">
+      <view class="header-main-row" bindtap="goToKitchenEdit">
+        <view class="header-logo">
+          <image class="logo-img" src="{{kitchenInfo.avatar || defaultAvatar}}" mode="aspectFill"></image>
+        </view>
+        <view class="header-texts">
+          <text class="header-title">{{kitchenInfo.name || '我的厨房'}}</text>
+          <text class="header-subtitle">{{kitchenInfo.description || '世间万物，唯有美食不可辜负'}}</text>
+        </view>
+      </view>
+      
+      <!-- New Single Row Control Bar -->
+      <view class="control-bar">
+        <view class="control-title">私房菜</view>
+        <view class="control-buttons-right">
+          <!-- 管理和添加菜谱功能已移至"我的"页面大厨专区 -->
+          <view class="btn-ctrl-search" bindtap="onSearchTap">
+             <icon type="search" size="12" color="#666" style="margin-right:4rpx;"/> 搜索
+          </view>
+          <view class="btn-ctrl-wish" bindtap="goToWishPool">
+            💭 许愿
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Split Layout: Sidebar + Content -->
+  <view class="split-layout">
+    <!-- Left Sidebar: Categories -->
+    <scroll-view scroll-y class="sidebar-scroll">
+      <view 
+        class="sidebar-item {{selectedCategory === item._id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="_id"
+        bindtap="onCategorySelect"
+        data-id="{{item._id}}"
+      >
+        {{item.name}}
+      </view>
+      <!-- Footer padding for scroll -->
+      <view style="height: 100rpx"></view>
+    </scroll-view>
+
+    <!-- Right Content: Menu Items -->
+    <scroll-view scroll-y class="content-scroll">
+      <view class="category-header" wx:if="{{selectedCategoryName}}">
+        {{selectedCategoryName}}
+      </view>
+      
+      <view class="content-body">
+         <!-- Empty State -->
+        <view class="empty-state-container" wx:if="{{items.length === 0 && !loading}}">
+          <view class="empty-content">
+            <text class="empty-text">该分类暂无内容</text>
+          </view>
+        </view>
+
+        <!-- Grid of Menu Items -->
+        <view class="menu-grid" wx:else>
+          <view class="menu-grid-item" wx:for="{{items}}" wx:key="_id" bindtap="onItemTap" data-item="{{item}}">
+            <image class="grid-img" src="{{item.image_url || defaultImage}}" mode="aspectFill" />
+            <view class="grid-info">
+              <text class="grid-name">{{item.name}}</text>
+              <view class="grid-bottom">
+                <text class="grid-price">¥{{item.price / 100}}</text>
+                <view class="add-circle-btn" catchtap="onAddToCart" data-item="{{item}}">+</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        
+        <!-- Loading -->
+        <view class="loading-state" wx:if="{{loading}}">
+          <text>加载中...</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- Search Popup Overlay -->
+  <view class="search-popup-mask" wx:if="{{showSearchPopup}}" bindtap="onCloseSearch"></view>
+  <view class="search-popup-container {{showSearchPopup ? 'show' : ''}}">
+    <view class="search-popup-header">
+      <view class="search-input-wrapper">
+        <icon type="search" size="14" color="#999"></icon>
+        <input 
+          class="search-popup-input" 
+          placeholder="搜索美食" 
+          focus="{{showSearchPopup}}"
+          bindinput="onSearchInput"
+          value="{{searchKeyword}}"
+        />
+        <view wx:if="{{searchKeyword}}" bindtap="onSearchInput" data-detail-value="" style="padding:10rpx;">
+           <icon type="clear" size="14" color="#ccc"></icon>
+        </view>
+      </view>
+      <view class="search-btn-cancel" bindtap="onCloseSearch">取消</view>
+    </view>
+    
+    <scroll-view scroll-y class="search-results-list">
+      <block wx:if="{{searchKeyword && searchResults.length > 0}}">
+         <view class="cart-item" wx:for="{{searchResults}}" wx:key="_id">
+            <image class="cart-item-img" src="{{item.image_url || defaultImage}}" mode="aspectFill" />
+            <view class="cart-item-info">
+              <text class="cart-item-name">{{item.name}}</text>
+              <view style="font-size:22rpx;color:#999;margin-top:4rpx;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{item.description||'暂无描述'}}</view>
+              <text class="cart-item-price">¥{{item.price / 100}}</text>
+            </view>
+            <view class="add-circle-btn" catchtap="onAddToCart" data-item="{{item}}">+</view>
+         </view>
+      </block>
+      <view wx:elif="{{searchKeyword}}" class="empty-state-container">
+        <text class="empty-text">未找到相关菜品</text>
+      </view>
+       <view wx:else class="empty-state-container" style="padding-top:100rpx;">
+        <text style="display:block;font-size:60rpx;margin-bottom:20rpx;">🔍</text>
+        <text class="empty-text">输入关键词搜索美食</text>
+      </view>
+      <view style="height: 120rpx;"></view>
+    </scroll-view>
+  </view>
+
+  <!-- Cart Popup -->
+  <view class="cart-mask" wx:if="{{showCartDetail}}" bindtap="onHideCart"></view>
+  <view class="cart-popup" wx:if="{{showCartDetail}}">
+    <view class="cart-header">
+      <text class="cart-header-title">已选美味</text>
+      <view class="btn-clear" bindtap="onClearCart">
+        <text style="margin-right:8rpx;">🗑️</text> 清空美味
+      </view>
+    </view>
+    
+    <scroll-view scroll-y class="cart-list">
+      <view class="cart-item" wx:for="{{cartList}}" wx:key="menu_item_id">
+        <image class="cart-item-img" src="{{item.menu_item.image_url || defaultImage}}" mode="aspectFill" />
+        <view class="cart-item-info">
+          <text class="cart-item-name">{{item.menu_item.name}}</text>
+          <text class="cart-item-price">¥{{item.menu_item.price / 100}}</text>
+        </view>
+        <view class="cart-item-controls">
+          <view class="ctrl-btn minus" catchtap="onDecreaseCart" data-index="{{index}}">-</view>
+          <text class="ctrl-num">{{item.quantity}}</text>
+          <view class="ctrl-btn plus" catchtap="onIncreaseCart" data-index="{{index}}">+</view>
+        </view>
+      </view>
+    </scroll-view>
+    
+    <view class="cart-popup-footer">
+      <text class="total-label">共计:</text>
+      <text class="total-price">¥{{totalPrice / 100}}</text>
+    </view>
+  </view>
+
+  <!-- Floating Bottom Bar (Outside split layout to float) -->
+  <view class="floating-bottom-bar">
+    <view class="cart-icon-wrapper" bindtap="onToggleCart">
+      <text class="cart-emoji">🛒</text>
+      <view class="badge" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+    </view>
+    
+    <view class="action-buttons-group">
+      <view class="btn-invite" bindtap="onInviteFriends">邀请好友下单</view>
+      <view class="btn-order" bindtap="onStartOrdering">下单</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+<!--pages/discover/index.wxml-->
+<view class="container">
+  <text>发现页 - 敬请期待</text>
+</view>

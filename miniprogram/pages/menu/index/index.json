@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的厨房",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "favorite-btn": "/components/favorite-btn/index"
+  }
+}

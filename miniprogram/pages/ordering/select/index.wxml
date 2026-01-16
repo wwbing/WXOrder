@@ -1,0 +1,96 @@
+<!--pages/ordering/select/index.wxml-->
+<view class="container">
+  <!-- 顶部：会话信息 -->
+  <view class="session-header" wx:if="{{session}}">
+    <view class="session-info">
+      <text class="session-title">{{session.title}}</text>
+      <text class="session-deadline">截止: {{formatTime(session.deadline)}}</text>
+    </view>
+  </view>
+
+  <!-- 已选菜品 -->
+  <view class="selected-section" wx:if="{{selectedItems.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">已选菜品</text>
+      <text class="section-count">{{totalQuantity}} 份</text>
+    </view>
+    <view class="selected-list">
+      <view class="selected-item" wx:for="{{selectedItems}}" wx:key="menuItemId">
+        <image class="item-image" src="{{item.menu_item.image_url || defaultImage}}" mode="aspectFill" />
+        <view class="item-info">
+          <text class="item-name">{{item.menu_item.name}}</text>
+          <text class="item-price">¥{{item.menu_item.price / 100}}</text>
+        </view>
+        <view class="item-actions">
+          <view class="quantity-btn minus" bindtap="onDecrease" data-index="{{index}}">-</view>
+          <text class="quantity">{{item.quantity}}</text>
+          <view class="quantity-btn plus" bindtap="onIncrease" data-index="{{index}}">+</view>
+        </view>
+      </view>
+    </view>
+    <view class="selected-footer">
+      <view class="total">
+        <text class="total-label">小计</text>
+        <text class="total-amount">¥{{totalAmount / 100}}</text>
+      </view>
+      <view class="submit-btn" bindtap="onSubmit">确认点餐</view>
+    </view>
+  </view>
+
+  <!-- 空选择状态 -->
+  <view class="empty-selection" wx:if="{{selectedItems.length === 0 && !loading}}">
+    <text class="empty-icon">🍽️</text>
+    <text class="empty-text">还没有选择菜品</text>
+    <text class="empty-hint">从下方菜单中选择要点的菜品</text>
+  </view>
+
+  <!-- 分类Tab -->
+  <scroll-view scroll-x class="category-scroll" wx:if="{{categories.length > 0}}">
+    <view class="category-list">
+      <view
+        class="category-item {{activeCategoryId === item._id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="_id"
+        data-id="{{item._id}}"
+        bindtap="onCategoryTap"
+      >
+        {{item.name}}
+        <text class="category-count" wx:if="{{item.itemCount > 0}}">{{item.itemCount}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 菜品列表 -->
+  <view class="menu-list" wx:if="{{items.length > 0}}">
+    <view class="menu-item" wx:for="{{items}}" wx:key="_id">
+      <image class="item-image" src="{{item.image_url || defaultImage}}" mode="aspectFill" />
+      <view class="item-info">
+        <text class="item-name">{{item.name}}</text>
+        <text class="item-price">¥{{item.price / 100}}</text>
+        <text class="item-desc">{{item.description || '暂无描述'}}</text>
+      </view>
+      <view class="item-actions">
+        <view class="add-btn {{getItemQuantity(item._id) > 0 ? 'has-added' : ''}}" bindtap="onAddItem" data-item="{{item}}">
+          {{getItemQuantity(item._id) > 0 ? getItemQuantity(item._id) : '+'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空分类提示 -->
+  <view class="empty-state" wx:if="{{categories.length > 0 && items.length === 0 && !loading}}">
+    <text class="empty-icon">🍽️</text>
+    <text class="empty-text">该分类下暂无菜品</text>
+    <text class="empty-hint">请先在"菜单管理"中添加菜品</text>
+  </view>
+
+  <!-- 无分类提示 -->
+  <view class="empty-state" wx:if="{{categories.length === 0 && !loading}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无菜单</text>
+    <text class="empty-hint">请先在"菜单管理"中添加分类和菜品</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+</view>

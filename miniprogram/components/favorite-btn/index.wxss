@@ -1,0 +1,33 @@
+/* components/favorite-btn/index.wxss */
+.favorite-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.favorite-btn .icon {
+  font-size: 40rpx;
+}
+
+.favorite-btn.small .icon {
+  font-size: 32rpx;
+}
+
+.favorite-btn.large .icon {
+  font-size: 48rpx;
+}
+
+.favorite-btn .count {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: 4rpx;
+}
+
+.favorite-btn.small .count {
+  font-size: 16rpx;
+}
+
+.favorite-btn.large .count {
+  font-size: 24rpx;
+}

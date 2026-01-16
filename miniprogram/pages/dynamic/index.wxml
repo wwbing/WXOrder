@@ -1,0 +1,126 @@
+<!--pages/dynamic/index.wxml-->
+<wxs module="utils">
+  var formatTime = function(date) {
+    if (!date) return ''
+    var d = getDate(date)
+    var now = getDate()
+    var diff = now.getTime() - d.getTime()
+    var minutes = Math.floor(diff / 60000)
+    
+    if (minutes < 1) return '刚刚'
+    if (minutes < 60) return minutes + '分钟前'
+    
+    var hours = Math.floor(minutes / 60)
+    if (hours < 24) return hours + '小时前'
+    
+    var days = Math.floor(hours / 24)
+    if (days < 7) return days + '天前'
+    
+    return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+  }
+  
+  module.exports.formatTime = formatTime
+</wxs>
+
+<view class="dynamic-container">
+  
+  <!-- Header Tabs -->
+  <view class="tabs-header">
+    <view class="tab-item {{activeTab === 'pending' ? 'active' : ''}}" bindtap="onTabSwitch" data-tab="pending">
+      待接单
+    </view>
+    <view class="tab-item {{activeTab === 'cooking' ? 'active' : ''}}" bindtap="onTabSwitch" data-tab="cooking">
+      烹饪中
+    </view>
+    <view class="tab-item {{activeTab === 'completed' ? 'active' : ''}}" bindtap="onTabSwitch" data-tab="completed">
+      已完成
+    </view>
+  </view>
+
+  <!-- Order List -->
+  <scroll-view scroll-y class="order-list">
+    <block wx:if="{{orders.length > 0}}">
+      <view class="order-card" wx:for="{{orders}}" wx:key="_id">
+        <!-- Order Header -->
+        <view class="order-header">
+          <image class="avatar" src="{{item.created_by.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill" />
+          <view class="order-info">
+            <text class="username">{{item.created_by.nickname}}</text>
+            <text class="time">{{utils.formatTime(item.created_at)}}</text>
+          </view>
+          <view class="status-badge status-{{item.status}}">
+            <block wx:if="{{item.status === 'pending'}}">待接单</block>
+            <block wx:elif="{{item.status === 'cooking'}}">烹饪中</block>
+            <block wx:elif="{{item.status === 'ready'}}">开饭啦</block>
+            <block wx:else>已完成</block>
+          </view>
+        </view>
+
+        <!-- Order Items -->
+        <view class="order-items">
+          <view class="item-row" wx:for="{{item.items}}" wx:for-item="dish" wx:key="index">
+            <text class="dish-name">{{dish.name}}</text>
+            <text class="dish-qty">x{{dish.quantity}}</text>
+            <text class="dish-price">¥{{dish.price / 100}}</text>
+          </view>
+        </view>
+
+        <!-- Total -->
+        <view class="order-total">
+          合计: <text class="amount">¥{{item.total_price / 100}}</text>
+        </view>
+
+        <!-- Praise Display (if exists) -->
+        <view wx:if="{{item.praise && item.praise.content}}" class="praise-section">
+          <view class="praise-header">🌈 彩虹屁</view>
+          <view class="praise-content">{{item.praise.content}}</view>
+          <view class="praise-author">— {{item.praise.nickname}}</view>
+        </view>
+
+        <!-- Review Display (if exists) -->
+        <view wx:if="{{item.review && item.review.rating}}" class="review-section">
+          <view class="review-header">⭐ 评分: {{item.review.rating}}/5</view>
+          <view wx:if="{{item.review.comment}}" class="review-comment">{{item.review.comment}}</view>
+        </view>
+
+        <!-- Actions (Role-Based) -->
+        <view class="order-actions">
+          <!-- Chef Actions -->
+          <block wx:if="{{userRole === 'chef'}}">
+            <button wx:if="{{item.status === 'pending'}}" class="btn-action btn-primary" bindtap="onAcceptOrder" data-id="{{item._id}}">
+              接单做菜
+            </button>
+            <button wx:if="{{item.status === 'cooking'}}" class="btn-action btn-success" bindtap="onCallForDinner" data-id="{{item._id}}">
+              喊吃饭
+            </button>
+            <!-- Delete button for any status -->
+            <button class="btn-action btn-danger" bindtap="onDeleteOrder" data-id="{{item._id}}">
+              删除
+            </button>
+          </block>
+
+          <!-- Foodie Actions -->
+          <block wx:else>
+            <button wx:if="{{item.status === 'pending'}}" class="btn-action btn-ghost" disabled>
+              等待大厨接单...
+            </button>
+            <button wx:if="{{item.status === 'cooking'}}" class="btn-action btn-outline" bindtap="onUrgeOrder" data-id="{{item._id}}">
+              催单
+            </button>
+            <button wx:if="{{item.status === 'ready'}}" class="btn-action btn-primary" bindtap="onSubmitReview" data-id="{{item._id}}">
+              评价 & 彩虹屁
+            </button>
+          </block>
+        </view>
+      </view>
+    </block>
+
+    <!-- Empty State -->
+    <view wx:else class="empty-state">
+      <text class="empty-icon">🍽️</text>
+      <text class="empty-text">还没有任何动态</text>
+      <text class="empty-hint">快去厨房点餐吧~</text>
+    </view>
+  </scroll-view>
+
+</view>

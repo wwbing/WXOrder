@@ -1,0 +1,50 @@
+<!--pages/kitchen/edit/index.wxml-->
+<view class="container">
+  <!-- Tabs -->
+  <view class="tabs-nav">
+    <view class="tab-item active">基础信息</view>
+    <view class="tab-item">收款码</view>
+    <view class="tab-item">展示</view>
+    <view class="tab-item">隐私</view>
+  </view>
+
+  <!-- Form Content -->
+  <view class="form-section">
+    <!-- Background Image -->
+    <view class="field-group">
+      <text class="label">厨房背景图</text>
+      <view class="bg-uploader" bindtap="chooseBgImage">
+        <image class="bg-image" src="{{kitchenInfo.bgImage || defaultBg}}" mode="aspectFill"></image>
+        <view class="btn-change-bg">更换背景</view>
+      </view>
+    </view>
+
+    <!-- Avatar -->
+    <view class="field-group">
+      <text class="label">头像</text>
+      <view class="avatar-uploader" bindtap="chooseAvatar">
+        <image class="avatar-img" src="{{kitchenInfo.avatar || defaultAvatar}}" mode="aspectFill"></image>
+        <view class="camera-icon-wrapper">
+          <text class="camera-icon">📷</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Name -->
+    <view class="field-group">
+      <text class="label">厨房名称</text>
+      <input class="input-box" value="{{kitchenInfo.name}}" bindinput="onNameInput" placeholder="请输入厨房名称" />
+    </view>
+
+    <!-- Description -->
+    <view class="field-group">
+      <text class="label">厨房介绍</text>
+      <textarea class="textarea-box" value="{{kitchenInfo.description}}" bindinput="onDescInput" placeholder="世间万物，唯有美食不可辜负" maxlength="100"></textarea>
+    </view>
+  </view>
+
+  <!-- Save Button -->
+  <view class="footer-action">
+    <button class="btn-save" bindtap="savekitchenInfo">保存修改</button>
+  </view>
+</view>

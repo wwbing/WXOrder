@@ -1,0 +1,157 @@
+<!--pages/ordering/index/index.wxml-->
+<view class="container page-ordering-index">
+  <!-- Active Session Dashboard -->
+  <view class="dashboard-section" wx:if="{{activeSession}}">
+    <view class="session-card">
+      <view class="card-header-gradient">
+        <view class="header-content">
+          <view class="title-row">
+            <text class="session-title">{{activeSession.title}}</text>
+            <view class="status-badge" wx:if="{{isCreator}}">我的发布</view>
+          </view>
+          <view class="countdown-wrapper" wx:if="{{timeLeft}}">
+            <text class="countdown-icon">⏰</text>
+            <text class="countdown-text">剩余 {{timeLeft}}</text>
+          </view>
+          <view class="countdown-wrapper" wx:else>
+            <text class="countdown-text">已截止</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="stats-row">
+        <view class="stat-item">
+          <text class="stat-num">{{summary.totalQuantity || 0}}</text>
+          <text class="stat-desc">份餐品</text>
+        </view>
+        <view class="divider-vert"></view>
+        <view class="stat-item">
+          <text class="stat-num highlight">¥{{(summary.totalAmount || 0) / 100}}</text>
+          <text class="stat-desc">总金额</text>
+        </view>
+        <view class="divider-vert"></view>
+        <view class="stat-item">
+          <text class="stat-num">{{summary.orderCount || 0}}</text>
+          <text class="stat-desc">人参与</text>
+        </view>
+      </view>
+
+      <!-- Participants Avatars -->
+      <view class="participants-preview" wx:if="{{summary.selections && summary.selections.length > 0}}">
+        <view class="avatars-row">
+          <image 
+            class="avatar-circle" 
+            wx:for="{{summary.selections}}" 
+            wx:key="_id" 
+            src="{{item.user_avatar || defaultAvatar}}" 
+            mode="aspectFill"
+            style="z-index: {{100 - index}}"
+          />
+        </view>
+        <text class="participants-label">正在一起点餐</text>
+      </view>
+    </view>
+
+    <!-- Detailed Summary List -->
+    <view class="detail-card" wx:if="{{summary.summary && summary.summary.length > 0}}">
+      <view class="card-title-row">
+        <text class="card-strong-title">已点清单</text>
+      </view>
+      <view class="summary-list">
+        <view class="summary-row" wx:for="{{summary.summary}}" wx:key="itemId">
+          <image class="row-img" src="{{item.item.image_url || defaultImage}}" mode="aspectFill" />
+          <view class="row-info">
+            <text class="row-name">{{item.item.name}}</text>
+            <text class="row-unit-price">¥{{item.item.price / 100}}</text>
+          </view>
+          <view class="row-total">
+            <text class="row-qty">x{{item.totalQuantity}}</text>
+            <text class="row-amount">¥{{item.totalAmount / 100}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Member Details (List View) -->
+    <view class="detail-card" wx:if="{{summary.selections && summary.selections.length > 0}}">
+       <view class="card-title-row">
+        <text class="card-strong-title">成员明细</text>
+      </view>
+      <view class="member-list">
+        <view class="member-row" wx:for="{{summary.selections}}" wx:key="_id">
+          <view class="member-left">
+            <image class="member-face" src="{{item.user_avatar || defaultAvatar}}" mode="aspectFill" />
+            <text class="member-nick">{{item.user_name}}</text>
+          </view>
+          <text class="member-consume">¥{{item.subtotal / 100}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Action Buttons -->
+    <view class="action-footer">
+      <button class="btn-main-action" bindtap="onEditMyOrder">
+        <text>🍽️ 修改我的菜单</text>
+      </button>
+      
+      <view class="admin-actions" wx:if="{{isCreator}}">
+        <button class="btn-secondary-action cancel" bindtap="onCancelSession">
+          取消
+        </button>
+        <button class="btn-secondary-action confirm" bindtap="onCloseSession">
+          ✅ 确认完成
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty State / No Active Session -->
+  <view class="empty-state-container" wx:if="{{!activeSession && !loading}}">
+    <view class="dashed-circle">
+      <text class="large-icon">🥘</text>
+    </view>
+    <text class="empty-h1">暂无进行中的点餐</text>
+    <text class="empty-p">发起一个点餐，呼唤家人一起选美食吧</text>
+    <button class="btn-start-large" bindtap="onStartOrdering">
+      发起新点餐
+    </button>
+  </view>
+
+  <!-- Create Session Popup -->
+  <view class="popup-mask {{showCreatePopup ? 'show' : ''}}" bindtap="closePopup"></view>
+  <view class="popup-modal {{showCreatePopup ? 'show' : ''}}">
+    <view class="popup-top">
+      <text class="popup-header-title">新的聚餐</text>
+      <view class="close-icon" bindtap="closePopup">×</view>
+    </view>
+
+    <view class="form-body">
+      <view class="form-item">
+        <label>给这次聚餐起个名字</label>
+        <input class="modern-input" placeholder="例如：周末大餐" placeholder-class="ph" bindinput="onTitleInput" value="{{createForm.title}}" />
+      </view>
+
+      <view class="form-item">
+        <label>大家选餐的时间</label>
+        <scroll-view scroll-x class="chips-scroll" enable-flex>
+          <view 
+            class="time-chip {{createForm.deadlineMinutes === item.value ? 'selected' : ''}}"
+            wx:for="{{deadlineOptions}}"
+            wx:key="value"
+            bindtap="onDeadlineSelect"
+            data-value="{{item.value}}"
+          >
+            {{item.label}}
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+
+    <button class="btn-create-confirm" bindtap="onCreateSession">立即发起</button>
+  </view>
+
+  <!-- Loading -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+     <view class="spinner"></view>
+  </view>
+</view>

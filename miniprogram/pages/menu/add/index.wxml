@@ -1,0 +1,76 @@
+<!--pages/menu/add/index.wxml-->
+<view class="page-container">
+  
+  <!-- Cover Image -->
+  <view class="upload-container" bindtap="onChooseImage">
+    <view class="upload-box" wx:if="{{!imageUrl}}">
+      <view class="camera-icon">📷</view>
+      <text class="upload-text">上传封面图</text>
+    </view>
+    <image wx:else src="{{imageUrl}}" class="upload-box" mode="aspectFill" />
+  </view>
+
+  <!-- Title Input -->
+  <view class="form-group">
+    <input 
+      class="title-input" 
+      placeholder="输入菜谱标题，必填项" 
+      placeholder-class="title-input-placeholder"
+      model:value="{{name}}"
+    />
+  </view>
+
+  <!-- Description Input -->
+  <view class="form-group">
+    <textarea 
+      class="desc-input" 
+      placeholder="输入这道菜谱背后的故事" 
+      placeholder-class="desc-input-placeholder"
+      model:value="{{description}}"
+      auto-height
+    />
+  </view>
+
+  <!-- Settings List -->
+  <view class="settings-list">
+    
+    <!-- Category Picker -->
+    <picker bindchange="onCategoryChange" value="{{categoryIndex}}" range="{{categories}}" range-key="name">
+      <view class="setting-row">
+        <text class="setting-label">所属分类</text>
+        <view class="setting-right">
+          <text class="picker-text">{{categories[categoryIndex].name || '默认分类'}}</text>
+          <text class="icon-arrow-right">></text>
+        </view>
+      </view>
+    </picker>
+
+    <!-- Is Available Switch -->
+    <view class="setting-row">
+      <text class="setting-label">是否上架</text>
+      <switch color="#07c160" checked="{{isAvailable}}" bindchange="onAvailableChange" />
+    </view>
+
+    <!-- Price Input -->
+    <view class="setting-row">
+      <view class="setting-label">
+        虚拟金额 <text class="tips-icon">?</text>
+      </view>
+      <input 
+        class="price-input" 
+        type="digit" 
+        placeholder="请输入金额" 
+        model:value="{{price}}"
+      />
+    </view>
+
+  </view>
+
+  <!-- Submit Button -->
+  <view class="bottom-bar">
+    <view class="btn-submit {{!name ? 'disabled' : ''}}" bindtap="onSubmit">
+      发布菜谱
+    </view>
+  </view>
+
+</view>

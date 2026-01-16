@@ -1,0 +1,54 @@
+<!--pages/menu/search/index.wxml-->
+<view class="page-search">
+  <!-- Header -->
+  <view class="search-header">
+    <view class="search-bar">
+      <icon class="search-icon" type="search" size="14" color="#999"/>
+      <input 
+        class="search-input" 
+        placeholder="搜索菜品名称" 
+        placeholder-class="placeholder" 
+        bindinput="onInput"
+        value="{{keyword}}"
+        focus
+        confirm-type="search"
+      />
+      <icon wx:if="{{keyword}}" type="clear" size="14" color="#ccc" bindtap="onClear"/>
+    </view>
+    <view class="btn-cancel" bindtap="onCancel">取消</view>
+  </view>
+
+  <!-- Results -->
+  <scroll-view scroll-y class="search-results">
+    <!-- Empty Initial -->
+    <view class="empty-state" wx:if="{{!keyword}}">
+      <text class="empty-emoji">🔍</text>
+      <text>输入关键词搜索美食</text>
+    </view>
+
+    <!-- Empty No Results -->
+    <view class="empty-state" wx:elif="{{results.length === 0}}">
+      <text class="empty-emoji">😕</text>
+      <text>没有找到相关菜品</text>
+    </view>
+
+    <!-- List -->
+    <block wx:else>
+      <view class="menu-item" wx:for="{{results}}" wx:key="_id">
+        <image class="item-img" src="{{item.image_url || defaultImage}}" mode="aspectFill" />
+        <view class="item-info">
+          <view>
+            <text class="item-name">{{item.name}}</text>
+            <view class="item-desc">{{item.description || '暂无描述'}}</view>
+          </view>
+          <view class="item-footer">
+            <text class="item-price">¥{{item.price / 100}}</text>
+            <view class="btn-add" catchtap="onAddToCart" data-item="{{item}}">+</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <view style="height: 40rpx"></view>
+  </scroll-view>
+</view>

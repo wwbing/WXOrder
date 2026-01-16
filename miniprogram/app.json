@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "pages/menu/index/index",
+    "pages/dynamic/index",
+    "pages/praise/history/index",
+    "pages/menu/add/index",
+    "pages/menu/search/index",
+    "pages/kitchen/edit/index",
+    "pages/orders/index/index",
+    "pages/discover/index",
+    "pages/profile/index/index",
+    "pages/profile/edit/index",
+    "pages/auth/login/index",
+    "pages/profile/settings/index",
+    "pages/admin/menu-manage/index/index",
+    "pages/admin/category-manage/index",
+    "pages/favorites/index/index",
+    "pages/reviews/list/index",
+    "pages/reviews/create/index",
+    "pages/ordering/index/index",
+    "pages/ordering/select/index",
+    "pages/orders/detail/index",
+    "pages/demo/index",
+    "pages/index/index",
+    "pages/example/index",
+    "pages/wish/index/index"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "我的厨房",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/menu/index/index",
+        "text": "厨房",
+        "iconPath": "images/icon-kitchen.png",
+        "selectedIconPath": "images/icon-kitchen-active.png"
+      },
+      {
+        "pagePath": "pages/dynamic/index",
+        "text": "动态",
+        "iconPath": "images/icon-orders.png",
+        "selectedIconPath": "images/icon-orders-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index/index",
+        "text": "我的",
+        "iconPath": "images/icon-me.png",
+        "selectedIconPath": "images/icon-me-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

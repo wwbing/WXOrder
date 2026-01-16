@@ -1,0 +1,26 @@
+<!--pages/demo/index.wxml-->
+<view class="container">
+  <view class="title">家庭点餐小程序</view>
+  <view class="subtitle">Hello World Demo</view>
+
+  <view class="user-info" bindtap="getUserProfile">
+    <image class="avatar" src="{{userInfo.avatarUrl || defaultAvatar}}"></image>
+    <text class="nickname">{{userInfo.nickName || '点击登录'}}</text>
+  </view>
+
+  <view class="btn-group">
+    <button class="btn" bindtap="callCloudFunction">调用云函数</button>
+    <button class="btn" bindtap="addToDatabase">添加数据</button>
+    <button class="btn" bindtap="queryData">查询数据</button>
+  </view>
+
+  <view class="result-box">
+    <view class="result-title">操作结果：</view>
+    <view class="result-content">{{result}}</view>
+  </view>
+
+  <view class="result-box error-box" bindtap="copyError" wx:if="{{errorDetail}}">
+    <view class="result-title">详细信息（点击复制）：</view>
+    <view class="result-content">{{errorDetail}}</view>
+  </view>
+</view>

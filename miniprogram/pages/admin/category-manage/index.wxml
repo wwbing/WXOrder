@@ -1,0 +1,44 @@
+<!--pages/admin/category-manage/index.wxml-->
+<view class="container">
+  <view class="tip-bar">长按"排序"按钮进行拖动排序</view>
+  
+  <!-- Sortable List Area -->
+  <view class="sort-area" style="height: {{areaHeight}}rpx; position: relative;">
+    <view 
+      wx:for="{{categories}}" 
+      wx:key="_id"
+      class="category-card-wrapper {{draggingIndex === index ? 'dragging' : ''}}"
+      style="position: absolute; left: 0; right: 0; height: 120rpx; top: {{item.y}}px; z-index: {{draggingIndex === index ? 100 : 1}}; transition: {{draggingIndex === index ? 'none' : 'top 0.2s ease-out'}};"
+    >
+      <view class="category-card">
+          <text class="cat-name">{{item.name}}</text>
+          
+          <view class="cat-actions">
+            <!-- Sort Handle: Manual Touch Events -->
+            <view class="btn-sort" 
+                  catchtouchstart="onDragStart" 
+                  catchtouchmove="onDragMove"
+                  catchtouchend="onDragEnd" 
+                  data-index="{{index}}">
+                  排序
+            </view>
+            
+            <view class="btn-icon" catchtap="onEditCategory" data-item="{{item}}">
+              <text class="iconfont icon-edit">✎</text>
+            </view>
+            
+            <view class="btn-icon" catchtap="onDeleteCategory" data-id="{{item._id}}">
+              <text class="iconfont icon-delete">✖</text>
+            </view>
+          </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-tip" wx:if="{{categories.length === 0}}">暂无分类，请添加</view>
+
+  <!-- Add Button -->
+  <view class="bottom-bar">
+    <view class="btn-add-cat" bindtap="onAddCategory">添加分类</view>
+  </view>
+</view>

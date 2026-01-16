@@ -1,0 +1,5 @@
+<!--components/favorite-btn/index.wxml-->
+<view class="favorite-btn {{size}} {{isFavorited ? 'favorited' : ''}}" bindtap="toggle">
+  <text class="icon">{{isFavorited ? '❤️' : '🤍'}}</text>
+  <text class="count" wx:if="{{showCount && count > 0}}">{{count}}</text>
+</view>

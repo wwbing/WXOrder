@@ -1,0 +1,116 @@
+/**app.wxss**/
+page {
+  /* --- Design Tokens --- */
+
+  /* Brand Colors - Warm & Appetizing */
+  --primary-color: #FF6B00; /* Vibrant Orange */
+  --primary-light: #FFF2E8;
+  --primary-dark: #D4380D;
+  
+  --secondary-color: #FFC069; /* Warm Yellow */
+  --accent-green: #52C41A;  /* Fresh Green */
+  --accent-red: #FF4D4F;    /* Alert Red */
+  
+  /* Neutral Colors */
+  --text-main: #1F1F1F;
+  --text-secondary: #8C8C8C;
+  --text-placeholder: #BFBFBF;
+  --bg-body: #F5F7FA;
+  --bg-card: #FFFFFF;
+  --border-color: #E6E6E6;
+
+  /* Spacing */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+  
+  /* Radius */
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-round: 999rpx;
+
+  /* Shadows */
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
+  
+  /* Typography */
+  --font-size-xs: 20rpx;
+  --font-size-sm: 24rpx;
+  --font-size-base: 28rpx;
+  --font-size-lg: 32rpx;
+  --font-size-xl: 40rpx;
+  --font-size-xxl: 48rpx;
+
+  /* Global Reset/Base */
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+    Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+    sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Utilities */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--text-secondary); }
+.text-bold { font-weight: 600; }
+.text-center { text-align: center; }
+
+/* Button Resets & Base Styles */
+button {
+  background: initial;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+button:focus { outline: 0; }
+button::after { border: none; }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 32rpx;
+  border-radius: var(--radius-round);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #FF8800 0%, #FF6B00 100%);
+  color: white;
+  box-shadow: 0 8rpx 16rpx rgba(255, 107, 0, 0.2);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2rpx solid var(--border-color);
+  color: var(--text-main);
+}

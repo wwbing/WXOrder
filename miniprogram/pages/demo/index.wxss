@@ -1,0 +1,86 @@
+/* pages/demo/index.wxss */
+.container {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 40rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 60rpx;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60rpx;
+}
+
+.avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin-bottom: 20rpx;
+}
+
+.nickname {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.btn {
+  width: 100%;
+  background-color: #07c160;
+  color: white;
+  border-radius: 10rpx;
+  padding: 20rpx 0;
+}
+
+.result-box {
+  width: 100%;
+  background-color: white;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+.error-box {
+  background-color: #fff5f5;
+  border: 1rpx solid #ffcccc;
+}
+
+.result-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.result-content {
+  font-size: 24rpx;
+  color: #666;
+  word-break: break-all;
+  white-space: pre-wrap;
+}

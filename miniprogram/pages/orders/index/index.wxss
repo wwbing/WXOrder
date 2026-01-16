@@ -1,0 +1,155 @@
+/* pages/orders/index/index.wxss */
+page {
+  background-color: #f7f8fa;
+}
+
+.container {
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+/* 统计卡片 */
+.stats-card {
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(135deg, #07c160 0%, #10b981 100%);
+  margin: 20rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  color: white;
+}
+
+.stats-card .stat-item {
+  text-align: center;
+}
+
+.stats-card .stat-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.stats-card .stat-label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+/* 订单区域 */
+.orders-section {
+  margin: 20rpx;
+}
+
+.section-header {
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.order-item {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.04);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.order-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.order-status {
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.order-status.unpaid {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.order-status.paid {
+  background-color: #d1fae5;
+  color: #07c160;
+}
+
+.order-info {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.order-date, .order-count {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.order-amount {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #07c160;
+}
+
+.order-action {
+  font-size: 26rpx;
+  color: #07c160;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 150rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.empty-hint {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+}

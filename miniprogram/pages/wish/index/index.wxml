@@ -1,0 +1,71 @@
+<!--pages/wish/index/index.wxml-->
+<view class="wish-container">
+  <!-- 愿望列表 -->
+  <view class="wish-list" wx:if="{{wishes.length > 0}}">
+    <view class="wish-card" wx:for="{{wishes}}" wx:key="_id">
+      <view class="wish-header">
+        <view class="wish-title-row">
+          <text class="wish-title">{{item.title}}</text>
+          <view class="status-badge status-{{item.status}}">
+            {{item.status === 'pending' ? '待实现' : item.status === 'approved' ? '已认可' : item.status === 'rejected' ? '不做了' : '已实现'}}
+          </view>
+        </view>
+        <text class="wish-creator">{{item.creator_name}}</text>
+      </view>
+
+      <view class="wish-desc" wx:if="{{item.description}}">
+        {{item.description}}
+      </view>
+
+      <view class="wish-footer">
+        <view class="vote-btn {{item.voted_by && item.voted_by.indexOf(userOpenid) > -1 ? 'voted' : ''}}" bindtap="onVote" data-id="{{item._id}}">
+          <text class="vote-icon">{{item.voted_by && item.voted_by.indexOf(userOpenid) > -1 ? '❤️' : '🤍'}}</text>
+          <text class="vote-count">{{item.vote_count || 0}}</text>
+        </view>
+
+        <view class="wish-actions">
+          <text class="action-btn" bindtap="onEdit" data-id="{{item._id}}">编辑</text>
+          <text class="action-btn danger" bindtap="onDelete" data-id="{{item._id}}">删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">💭</text>
+    <text class="empty-text">还没有愿望</text>
+    <text class="empty-hint">许个愿吧，万一实现了呢</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="showAddDialog">+</view>
+
+  <!-- 添加弹窗 -->
+  <view class="dialog-mask" wx:if="{{showAddDialog}}" bindtap="hideAddDialog"></view>
+  <view class="dialog" wx:if="{{showAddDialog}}">
+    <view class="dialog-header">
+      <text class="dialog-title">许个愿</text>
+      <text class="dialog-close" bindtap="hideAddDialog">×</text>
+    </view>
+    <view class="dialog-body">
+      <view class="form-item">
+        <text class="form-label">愿望</text>
+        <input class="form-input" placeholder="想吃点什么？" value="{{newWish.title}}" bindinput="onTitleInput" maxlength="50"/>
+      </view>
+      <view class="form-item">
+        <text class="form-label">描述</text>
+        <textarea class="form-textarea" placeholder="详细说说（比如：少放辣、要加香菜）" value="{{newWish.description}}" bindinput="onDescInput" maxlength="200"/>
+      </view>
+    </view>
+    <view class="dialog-footer">
+      <button class="btn-cancel" bindtap="hideAddDialog">取消</button>
+      <button class="btn-confirm" bindtap="submitWish">许愿</button>
+    </view>
+  </view>
+</view>

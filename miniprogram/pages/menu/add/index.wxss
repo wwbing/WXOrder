@@ -1,0 +1,152 @@
+/* pages/menu/add/index.wxss */
+.page-container {
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 30rpx;
+  box-sizing: border-box;
+  padding-bottom: 120rpx; /* Space for bottom button */
+}
+
+/* Image Uploader */
+.upload-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60rpx;
+  margin-top: 20rpx;
+}
+
+.upload-box {
+  width: 300rpx;
+  height: 300rpx;
+  background-color: #f7f8fa;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx dashed #e0e0e0;
+  overflow: hidden;
+  position: relative;
+}
+
+.camera-icon {
+  font-size: 60rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
+.upload-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.uploaded-img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Form Fields */
+.form-group {
+  margin-bottom: 40rpx;
+}
+
+.title-input {
+  font-size: 40rpx;
+  font-weight: bold;
+  height: 60rpx;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 10rpx;
+  margin-bottom: 30rpx;
+}
+
+.title-input-placeholder {
+  color: #ccc;
+  font-weight: normal;
+}
+
+.desc-input {
+  width: 100%;
+  height: 120rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #666;
+}
+
+.desc-input-placeholder {
+  color: #ccc;
+}
+
+/* Settings Row */
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f9f9f9;
+}
+
+.setting-label {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.setting-right {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.picker-text {
+  margin-right: 10rpx;
+}
+
+.price-input {
+  text-align: right;
+  width: 200rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.icon-arrow-right {
+  font-size: 24rpx;
+  color: #ccc;
+  margin-left: 10rpx;
+}
+
+.tips-icon {
+  margin-left: 10rpx;
+  color: #ccc;
+  font-size: 28rpx;
+}
+
+/* Submit Button */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.btn-submit {
+  background: #07c160;
+  color: white;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-submit.disabled {
+  background: #ccc;
+  opacity: 0.8;
+}

@@ -1,0 +1,11 @@
+{
+  "name": "menu",
+  "version": "1.0.0",
+  "description": "菜单管理云函数",
+  "main": "index.js",
+  "author": "claude",
+  "license": "MIT",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

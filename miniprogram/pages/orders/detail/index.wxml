@@ -1,0 +1,57 @@
+<!--pages/orders/detail/index.wxml-->
+<view class="container">
+  <!-- 订单信息 -->
+  <view class="order-card" wx:if="{{order}}">
+    <view class="order-header">
+      <text class="order-title">{{order.title}}</text>
+      <view class="order-status {{order.payment_status}}">
+        <text>{{order.payment_status === 'paid' ? '已付款' : '待付款'}}</text>
+      </view>
+    </view>
+    <view class="order-meta">
+      <text class="meta-item">下单时间: {{formatTime(order.created_at)}}</text>
+      <text class="meta-item">订单号: {{order._id}}</text>
+    </view>
+    <view class="order-total">
+      <text class="total-label">订单总额</text>
+      <text class="total-amount">¥{{order.total_amount / 100}}</text>
+    </view>
+  </view>
+
+  <!-- 分账信息 -->
+  <view class="split-section" wx:if="{{items && items.length > 0}}">
+    <text class="section-title">分账明细</text>
+    <view class="split-list">
+      <view class="split-item" wx:for="{{items}}" wx:key="_id">
+        <view class="user-info">
+          <image class="user-avatar" src="{{item.user_avatar || defaultAvatar}}" mode="aspectFill" />
+          <text class="user-name">{{item.user_name}}</text>
+        </view>
+        <view class="split-amount">¥{{item.subtotal / 100}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 菜品明细 -->
+  <view class="items-section" wx:if="{{summary.summary && summary.summary.length > 0}}">
+    <text class="section-title">菜品汇总</text>
+    <view class="items-list">
+      <view class="item" wx:for="{{summary.summary}}" wx:key="itemId">
+        <image class="item-image" src="{{item.item.image_url || defaultImage}}" mode="aspectFill" />
+        <view class="item-info">
+          <text class="item-name">{{item.item.name}}</text>
+          <text class="item-price">¥{{item.item.price / 100}} x {{item.totalQuantity}}</text>
+        </view>
+        <text class="item-amount">¥{{item.totalAmount / 100}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions" wx:if="{{order && order.payment_status === 'unpaid'}}">
+    <view class="action-btn mark-paid" bindtap="onMarkAsPaid">标记为已付款</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+</view>

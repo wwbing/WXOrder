@@ -1,0 +1,102 @@
+<!--pages/admin/menu-manage/index/index.wxml-->
+<wxs module="utils">
+module.exports.includes = function(arr, item) {
+  return arr.indexOf(item) > -1;
+}
+</wxs>
+
+<view class="container">
+  <!-- Left Sidebar (Disable interaction in batch mode? Optional but good UX) -->
+  <view class="sidebar {{isBatchMode ? 'disabled' : ''}}">
+    <scroll-view scroll-y class="sidebar-scroll">
+      <view 
+        class="sidebar-item {{selectedCategoryId === item._id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="_id"
+        bindtap="{{isBatchMode ? '' : 'onCategorySelect'}}"
+        data-id="{{item._id}}"
+      >
+        {{item.name}}
+      </view>
+    </scroll-view>
+    <view class="sidebar-bottom" bindtap="{{isBatchMode ? '' : 'onManageCategories'}}">
+      <text>分组管理</text>
+      <text class="iconfont">⚙</text>
+    </view>
+  </view>
+
+  <!-- Right Content -->
+  <view class="content">
+    <scroll-view scroll-y class="content-scroll">
+      <!-- Header -->
+      <view class="content-header">
+        <block wx:if="{{!isBatchMode}}">
+            <view class="header-left">
+               <text style="font-size:28rpx;color:#666;font-weight:normal;">共 {{items.length}} 道菜</text>
+            </view>
+            <view class="btn-batch" bindtap="toggleBatchMode">批量操作</view>
+        </block>
+        <block wx:else>
+            <view class="btn-batch btn-orange" bindtap="toggleBatchMode">取消批量</view>
+            <view class="batch-count">已选择 {{selectedItemIds.length}} 项</view>
+            <view class="btn-batch btn-default" bindtap="toggleSelectAll">
+                {{selectedItemIds.length === items.length && items.length > 0 ? '取消全选' : '全选'}}
+            </view>
+        </block>
+      </view>
+
+      <!-- Menu List -->
+      <view class="menu-list {{isBatchMode ? 'batch-mode' : ''}}">
+        <view class="menu-card" wx:for="{{items}}" wx:key="_id" bindtap="{{isBatchMode ? 'onToggleItemSelect' : ''}}" data-id="{{item._id}}">
+          <view class="card-img-wrapper">
+             <image class="card-img" src="{{item.image_url}}" mode="aspectFill"></image>
+             <view class="select-overlay" wx:if="{{isBatchMode}}">
+                <view class="check-circle {{utils.includes(selectedItemIds, item._id) ? 'checked' : ''}}">
+                    <text wx:if="{{utils.includes(selectedItemIds, item._id)}}" class="iconfont">✓</text>
+                </view>
+             </view>
+          </view>
+          
+          <view class="card-info">
+            <text class="card-name">{{item.name}}</text>
+            
+            <view class="info-middle-row">
+              <text class="card-status" wx:if="{{item.is_available}}">上架中</text>
+              <text class="card-status stopped" wx:else>已下架</text>
+              <text class="card-price">¥{{item.price / 100}}</text>
+            </view>
+            
+            <!-- Actions hidden in batch mode usually, or keep them but better hide to prevent conflict -->
+            <view class="card-actions" wx:if="{{!isBatchMode}}">
+              <view class="btn-action btn-yellow" wx:if="{{item.is_available}}" bindtap="onToggleItemStatus" data-id="{{item._id}}" data-status="down">下架</view>
+              <view class="btn-action btn-green" wx:else bindtap="onToggleItemStatus" data-id="{{item._id}}" data-status="up">上架</view>
+              <view class="btn-action btn-white" bindtap="onEditItem" data-item="{{item}}">编辑</view>
+              <view class="btn-action btn-red" bindtap="onDeleteItem" data-id="{{item._id}}">删除</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- Batch Bottom Bar -->
+<view class="batch-bottom-bar" wx:if="{{isBatchMode}}">
+    <view class="bar-left">
+        <view class="check-circle checked sm">
+            <text class="iconfont">✓</text>
+        </view>
+        <text>已选 {{selectedItemIds.length}} 项</text>
+    </view>
+    <view class="bar-right">
+        <view class="btn-bar btn-green-outline" bindtap="onBatchStatus" data-status="up">上架</view>
+        <view class="btn-bar btn-orange-outline" bindtap="onBatchStatus" data-status="down">下架</view>
+        <view class="btn-bar btn-green-fill" bindtap="onBatchMove">移动</view>
+    </view>
+</view>
+
+<!-- Floating Add Button -->
+<view class="fab-add" bindtap="onAddMenuItem" wx:if="{{!isBatchMode}}">
+  <text class="fab-icon">+</text>
+</view>
+

@@ -1,0 +1,117 @@
+/* pages/admin/category-manage/index.wxss */
+page {
+  background-color: #f7f8fa;
+  padding-bottom: 200rpx;
+}
+
+.container {
+    padding: 20rpx;
+}
+
+.tip-bar {
+    font-size: 24rpx;
+    color: #999;
+    text-align: center;
+    margin-bottom: 20rpx;
+}
+
+/* Sort Area */
+.sort-area {
+    width: 100%;
+    /* height set in inline style */
+    overflow: hidden;
+}
+
+.category-card-wrapper {
+   width: 100%;
+   /* height set in inline style (140rpx) */
+}
+
+.category-card {
+  height: 120rpx; /* Leave 20rpx for gap */
+  background: white;
+  border-radius: 12rpx;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.02);
+  box-sizing: border-box;
+}
+
+.category-card.dragging {
+    box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.15);
+    transform: scale(1.02);
+    z-index: 999;
+    background: #fff;
+}
+
+.cat-name {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.cat-actions {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx;
+  width: 60rpx;
+}
+
+.btn-sort {
+  font-size: 24rpx;
+  color: #fff;
+  background: #bbb;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  margin-right: 10rpx;
+}
+/* Active sort button visual */
+.category-card.dragging .btn-sort {
+    background: #07c160;
+}
+
+.icon-edit, .icon-delete {
+  font-size: 36rpx;
+}
+.icon-edit { color: #576b95; }
+.icon-delete { color: #ff4d4f; }
+
+/* Bottom Bar */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30rpx;
+  background: white;
+  padding-bottom: calc(30rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.05);
+  z-index: 200;
+}
+
+.btn-add-cat {
+  background: #07c160;
+  color: white;
+  height: 96rpx;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.empty-tip {
+    text-align: center;
+    color: #999;
+    margin-top: 100rpx;
+}

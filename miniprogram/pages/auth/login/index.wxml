@@ -1,0 +1,55 @@
+<!--pages/auth/login/index.wxml-->
+<view class="container login-container">
+  <!-- Header Area -->
+  <view class="header-section">
+    <view class="logo-wrapper">
+      <view class="logo-emoji">🥘</view>
+    </view>
+    <view class="header-text">
+      <text class="app-name">家庭点餐</text>
+      <text class="app-slogan">Warm meals, warm hearts.</text>
+    </view>
+  </view>
+
+  <!-- Content Area -->
+  <view class="content-section">
+    
+    <!-- Auth Step -->
+    <block wx:if="{{step === 'auth'}}">
+       <view class="auth-card center">
+          <view class="auth-title">欢迎使用</view>
+          <view class="auth-desc">登录后可同步数据和管理厨房</view>
+          <button class="btn btn-primary btn-block" bindtap="onRegister" loading="{{loading}}">微信一键登录</button>
+       </view>
+    </block>
+
+    <!-- Create Step -->
+    <block wx:elif="{{step === 'create'}}">
+       <view class="action-card">
+        <view class="card-header">
+          <text class="card-title">创建新厨房</text>
+          <text class="card-desc">为家人建立专属的云端菜单</text>
+        </view>
+        <view class="input-group">
+          <input class="custom-input" placeholder="给厨房起个名字 (默认'我的厨房')" placeholder-class="input-ph" bindinput="onFamilyNameInput" value="{{familyName}}" />
+        </view>
+        <button class="btn btn-primary btn-block" bindtap="createFamily" loading="{{loading}}">创建厨房</button>
+      </view>
+    </block>
+
+    <!-- Join Step -->
+    <block wx:elif="{{step === 'join'}}">
+       <view class="action-card">
+        <view class="card-header">
+          <text class="card-title">加入厨房</text>
+          <text class="card-desc">输入邀请码加入家人的厨房</text>
+        </view>
+        <view class="input-group">
+          <input class="custom-input" placeholder="输入6位邀请码" placeholder-class="input-ph" bindinput="onInviteCodeInput" value="{{inviteCode}}" maxlength="6" type="text" />
+        </view>
+        <button class="btn btn-primary btn-block" bindtap="joinFamily" loading="{{loading}}">加入厨房</button>
+      </view>
+    </block>
+
+  </view>
+</view>

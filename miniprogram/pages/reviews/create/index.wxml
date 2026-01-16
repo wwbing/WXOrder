@@ -1,0 +1,50 @@
+<!--pages/reviews/create/index.wxml-->
+<view class="review-container">
+  
+  <view class="review-card">
+    <!-- Rating Section -->
+    <view class="section">
+      <view class="section-title">给这顿饭打个分</view>
+      <view class="rating-stars">
+        <block wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
+          <text class="star {{rating >= item ? 'active' : ''}}" bindtap="onRatingChange" data-value="{{item}}">★</text>
+        </block>
+      </view>
+      <view class="rating-text">{{rating}} 星</view>
+    </view>
+
+    <!-- Praise Section -->
+    <view class="section">
+      <view class="section-title">给大厨送个彩虹屁 🌈</view>
+      <textarea 
+        class="praise-input" 
+        placeholder="夸夸大厨的手艺吧～"
+        value="{{praise}}"
+        bindinput="onPraiseInput"
+        maxlength="200"
+        auto-height
+      />
+      <view class="praise-count">{{praise.length}}/200</view>
+    </view>
+
+    <!-- Templates -->
+    <view class="section">
+      <view class="section-subtitle">快捷模板</view>
+      <view class="template-grid">
+        <view 
+          wx:for="{{praiseTemplates}}" 
+          wx:key="index"
+          class="template-item"
+          bindtap="usePraiseTemplate"
+          data-index="{{index}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- Submit Button -->
+    <button class="submit-btn" bindtap="onSubmit">提交评价</button>
+  </view>
+
+</view>

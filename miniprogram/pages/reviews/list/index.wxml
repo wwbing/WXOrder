@@ -1,0 +1,79 @@
+<!--pages/reviews/list/index.wxml-->
+<view class="container">
+  <!-- 评价统计 -->
+  <view class="stats-card" wx:if="{{stats && stats.total_count > 0}}">
+    <view class="avg-section">
+      <text class="avg-score">{{stats.avg_rating}}</text>
+      <text class="avg-unit">分</text>
+    </view>
+    <view class="rating-info">
+      <view class="stars">
+        <text class="star {{idx < stats.avg_rating ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:for-index="idx" wx:key="*this">★</text>
+      </view>
+      <text class="total-count">{{stats.total_count}} 条评价</text>
+    </view>
+  </view>
+
+  <!-- 热门标签 -->
+  <view class="tags-section" wx:if="{{stats && stats.popular_tags && stats.popular_tags.length > 0}}">
+    <text class="tags-title">大家都在说</text>
+    <view class="tags-list">
+      <text class="tag" wx:for="{{stats.popular_tags}}" wx:key="tag">{{item.tag}} ({{item.count}})</text>
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view class="reviews-list" wx:if="{{list.length > 0}}">
+    <view class="review-item" wx:for="{{list}}" wx:key="_id">
+      <view class="review-header">
+        <image class="user-avatar" src="{{item.user_avatar || defaultAvatar}}" mode="aspectFill" />
+        <view class="user-info">
+          <text class="user-name">{{item.user_name}}</text>
+          <view class="stars">
+            <text class="star {{idx < item.rating ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:for-index="idx" wx:key="*this">★</text>
+          </view>
+        </view>
+        <text class="review-time">{{formatTime(item.created_at)}}</text>
+      </view>
+
+      <view class="review-content" wx:if="{{item.content}}">
+        {{item.content}}
+      </view>
+
+      <!-- 评价图片 -->
+      <view class="review-images" wx:if="{{item.images && item.images.length > 0}}">
+        <image
+          class="review-image"
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          src="{{img}}"
+          mode="aspectFill"
+          catchtap="previewImage"
+          data-urls="{{item.images}}"
+          data-current="{{img}}"
+        />
+      </view>
+
+      <!-- 口味标签 -->
+      <view class="review-tags" wx:if="{{item.taste_tags && item.taste_tags.length > 0}}">
+        <text class="tag" wx:for="{{item.taste_tags}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{list.length === 0 && !loading}}">
+    <text class="empty-icon">📝</text>
+    <text class="empty-text">暂无评价</text>
+    <text class="empty-hint">成为第一个评价的人吧！</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 写评价按钮 -->
+  <view class="write-review-bar" wx:if="{{menuItemId && !hasReviewed}}">
+    <view class="write-btn" bindtap="goToWriteReview">写评价</view>
+  </view>
+</view>

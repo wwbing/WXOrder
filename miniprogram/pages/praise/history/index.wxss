@@ -1,0 +1,135 @@
+/* pages/praise/history/index.wxss */
+page {
+  background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 100%);
+}
+
+.praise-history-container {
+  min-height: 100vh;
+  padding: 30rpx;
+}
+
+/* Header */
+.history-header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.header-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16rpx;
+}
+
+.header-count {
+  font-size: 26rpx;
+  color: #ff6b9d;
+  opacity: 0.8;
+}
+
+/* Praise List */
+.praise-list {
+  height: calc(100vh - 200rpx);
+  padding-bottom: 40rpx;
+}
+
+.praise-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Rainbow decoration */
+.rainbow-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8rpx;
+  background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #c44569);
+}
+
+/* Content */
+.praise-content {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+  margin-bottom: 20rpx;
+}
+
+.content-text {
+  font-size: 32rpx;
+  line-height: 1.8;
+  color: #333;
+  font-style: italic;
+}
+
+.content-text::before {
+  content: '"';
+  font-size: 48rpx;
+  color: #ff6b9d;
+  opacity: 0.3;
+  margin-right: 8rpx;
+}
+
+.content-text::after {
+  content: '"';
+  font-size: 48rpx;
+  color: #ff6b9d;
+  opacity: 0.3;
+  margin-left: 8rpx;
+}
+
+/* Metadata */
+.praise-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.meta-label {
+  color: #999;
+  width: 100rpx;
+  flex-shrink: 0;
+}
+
+.meta-value {
+  color: #666;
+  flex: 1;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 200rpx 60rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  display: block;
+  margin-bottom: 40rpx;
+}
+
+.empty-text {
+  display: block;
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.empty-hint {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
